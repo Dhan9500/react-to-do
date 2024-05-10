@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
-import { Context } from "../context/Context";
+import { Context, useContextData } from "../context/Context";
 
 export default function AddToDO() {
-  const{handleAddTodo,input,handleInput,editItem}=useContext(Context);
+  // const{handleAddTodo,input,handleInput,editItem}=useContext(Context);
+  const{handleAddTodo,input,handleInput,editItem}=useContextData();
   const{isEdit}=editItem;
   return (
     <div className="flex justify-center mt-3 pb-2">

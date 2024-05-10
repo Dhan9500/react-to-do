@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useContext } from "react";
-import { Context } from "../context/Context";
+import { Context, useContextData } from "../context/Context";
 
 const Todo = ({ item,index }) => {
 
-const{removeTodo,edit,completeTodo}=useContext(Context);
+// const{removeTodo,edit,completeTodo}=useContext(Context);
+   const{removeTodo,edit,completeTodo} =useContextData();
 
 
   return (

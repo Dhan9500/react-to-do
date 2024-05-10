@@ -1,17 +1,22 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 export const Context = createContext(null);
 
+export const useContextData = () => {
+  const context = useContext(Context);
+  return context;
+};
+
 export const ContextProv = (props) => {
-  const [data, setData] = useState(()=>{
-    const localData=localStorage.getItem('data');
-    return localData?JSON.parse(localData):[];
+  const [data, setData] = useState(() => {
+    const localData = localStorage.getItem("data");
+    return localData ? JSON.parse(localData) : [];
   });
-  useEffect(()=>{
-    if(data.length>0){
-      localStorage.setItem('data',JSON.stringify(data));
+  useEffect(() => {
+    if (data.length >=0) {
+      localStorage.setItem("data", JSON.stringify(data));
     }
-  },[data]);
+  }, [data]);
 
   const [input, setInput] = useState("");
   const handleInput = (event) => {
@@ -61,7 +66,7 @@ export const ContextProv = (props) => {
         }
       })
     );
-    setInput('');
+    setInput("");
     setEditItem(false);
   };
   const [editItem, setEditItem] = useState(false);
@@ -76,12 +81,27 @@ export const ContextProv = (props) => {
     document.getElementById("inp").focus();
   };
 
-  const completeTodo=(i)=>{
-    setData(data.map((item,index)=>i===index?{...item,isCompleted:true}:{...item}))
+  const completeTodo = (i) => {
+    setData(
+      data.map((item, index) =>
+        i === index ? { ...item, isCompleted: true } : { ...item }
+      )
+    );
   };
-  // console.log(data)
   return (
-    <Context.Provider value={{data,setData,removeTodo,handleAddTodo,edit,editItem,input,handleInput,completeTodo}}>
+    <Context.Provider
+      value={{
+        data,
+        setData,
+        removeTodo,
+        handleAddTodo,
+        edit,
+        editItem,
+        input,
+        handleInput,
+        completeTodo,
+      }}
+    >
       {props.children}
     </Context.Provider>
   );
