@@ -1,10 +1,11 @@
 import React from "react";
 import Todo from "./Todo";
 import { useContext } from "react";
-import { Context } from "../context/Context";
+import { Context, useContextData } from "../context/Context";
 
 const ToDoList = () => {
-  const{data}=useContext(Context);
+  // const{data}=useContext(Context);
+  const{data}=useContextData();
   return (
     <div className="h-[70%] mt-3 flex flex-wrap justify-center overflow-auto gap-4">
     {
