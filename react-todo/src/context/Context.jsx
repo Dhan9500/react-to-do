@@ -1,9 +1,17 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 export const Context = createContext(null);
 
 export const ContextProv = (props) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(()=>{
+    const localData=localStorage.getItem('data');
+    return localData?JSON.parse(localData):[];
+  });
+  useEffect(()=>{
+    if(data.length>0){
+      localStorage.setItem('data',JSON.stringify(data));
+    }
+  },[data]);
 
   const [input, setInput] = useState("");
   const handleInput = (event) => {
@@ -53,6 +61,8 @@ export const ContextProv = (props) => {
         }
       })
     );
+    setInput('');
+    setEditItem(false);
   };
   const [editItem, setEditItem] = useState(false);
   const edit = (i, itm) => {
@@ -63,21 +73,15 @@ export const ContextProv = (props) => {
     );
     setEditItem({ ...itm, isEdit: true, index: i });
     setInput(itm.details);
+    document.getElementById("inp").focus();
   };
 
+  const completeTodo=(i)=>{
+    setData(data.map((item,index)=>i===index?{...item,isCompleted:true}:{...item}))
+  };
+  // console.log(data)
   return (
-    <Context.Provider
-      value={{
-        data,
-        setData,
-        removeTodo,
-        handleAddTodo,
-        edit,
-        editItem,
-        input,
-        handleInput,
-      }}
-    >
+    <Context.Provider value={{data,setData,removeTodo,handleAddTodo,edit,editItem,input,handleInput,completeTodo}}>
       {props.children}
     </Context.Provider>
   );

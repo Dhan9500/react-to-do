@@ -11,8 +11,10 @@ export default function AddToDO() {
           className="placeholder-green-300 px-10 py-1 text-center rounded-lg bg-purple-400 text-white outline-purple-500"
           type="text"
           placeholder="Type Your To-Do"
+          autoFocus
           value={input}
           onChange={handleInput}
+          id="inp"
         />
         <button type="submit" onClick={(e)=>{
           handleAddTodo(input,editItem)
