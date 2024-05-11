@@ -13,7 +13,7 @@ export const ContextProv = (props) => {
     return localData ? JSON.parse(localData) : [];
   });
   useEffect(() => {
-    if (data.length >=0) {
+    if (data.length >= 0) {
       localStorage.setItem("data", JSON.stringify(data));
     }
   }, [data]);
@@ -23,24 +23,28 @@ export const ContextProv = (props) => {
     setInput(event.target.value);
   };
 
+  const [error, setError] = useState(false);
   const handleAddTodo = (input, isEd) => {
     if (isEd.isEdit) {
       if (input.length === 0) {
         console.log("Please Type Your Todo....Save...");
+        setError(true);
       } else {
         setData(
           data.map((item, i) =>
-            isEd.index === i
+            isEd.index === item.id
               ? { ...item, details: input, isEdit: false }
               : { ...item }
           )
         );
         setEditItem(false);
         setInput("");
+        setError(false);
       }
     } else {
       if (input.length === 0) {
         console.log("Please Type Your Todo....");
+        setError("Please Type Your Todo....");
       } else {
         setData([
           ...data,
@@ -52,6 +56,7 @@ export const ContextProv = (props) => {
           },
         ]);
         setInput("");
+        setError(false);
       }
     }
   };
@@ -59,7 +64,7 @@ export const ContextProv = (props) => {
   const removeTodo = (i) => {
     setData(
       data.filter((item, index) => {
-        if (i === index) {
+        if (i === item.id) {
           return false;
         } else {
           return true;
@@ -73,35 +78,25 @@ export const ContextProv = (props) => {
   const edit = (i, itm) => {
     setData(
       data.map((item, index) =>
-        i === index ? { ...item, isEdit: true } : { ...item }
+        i === item.id ? { ...item, isEdit: true } : { ...item }
       )
     );
     setEditItem({ ...itm, isEdit: true, index: i });
     setInput(itm.details);
     document.getElementById("inp").focus();
   };
-
+  const [active, setActive] = useState([]);
+  const [completed, setCompleted] = useState([]);
   const completeTodo = (i) => {
     setData(
       data.map((item, index) =>
-        i === index ? { ...item, isCompleted: true } : { ...item }
+        i === item.id ? { ...item, isCompleted: true } : { ...item }
       )
     );
   };
+
   return (
-    <Context.Provider
-      value={{
-        data,
-        setData,
-        removeTodo,
-        handleAddTodo,
-        edit,
-        editItem,
-        input,
-        handleInput,
-        completeTodo,
-      }}
-    >
+    <Context.Provider value={{data,setData,removeTodo,handleAddTodo,edit,editItem,input,handleInput,completeTodo,error,}}>
       {props.children}
     </Context.Provider>
   );
