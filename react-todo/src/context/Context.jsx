@@ -13,7 +13,7 @@ export const ContextProv = (props) => {
     return localData ? JSON.parse(localData) : [];
   });
   useEffect(() => {
-    if (data.length >=0) {
+    if (data.length >= 0) {
       localStorage.setItem("data", JSON.stringify(data));
     }
   }, [data]);
@@ -23,10 +23,12 @@ export const ContextProv = (props) => {
     setInput(event.target.value);
   };
 
+  const [error, setError] = useState(false);
   const handleAddTodo = (input, isEd) => {
     if (isEd.isEdit) {
       if (input.length === 0) {
         console.log("Please Type Your Todo....Save...");
+        setError(true);
       } else {
         setData(
           data.map((item, i) =>
@@ -37,10 +39,12 @@ export const ContextProv = (props) => {
         );
         setEditItem(false);
         setInput("");
+        setError(false);
       }
     } else {
       if (input.length === 0) {
         console.log("Please Type Your Todo....");
+        setError("Please Type Your Todo....");
       } else {
         setData([
           ...data,
@@ -52,6 +56,7 @@ export const ContextProv = (props) => {
           },
         ]);
         setInput("");
+        setError(false);
       }
     }
   };
@@ -100,6 +105,7 @@ export const ContextProv = (props) => {
         input,
         handleInput,
         completeTodo,
+        error,
       }}
     >
       {props.children}
