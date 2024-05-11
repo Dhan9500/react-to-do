@@ -32,7 +32,7 @@ export const ContextProv = (props) => {
       } else {
         setData(
           data.map((item, i) =>
-            isEd.index === i
+            isEd.index === item.id
               ? { ...item, details: input, isEdit: false }
               : { ...item }
           )
@@ -64,7 +64,7 @@ export const ContextProv = (props) => {
   const removeTodo = (i) => {
     setData(
       data.filter((item, index) => {
-        if (i === index) {
+        if (i === item.id) {
           return false;
         } else {
           return true;
@@ -78,36 +78,25 @@ export const ContextProv = (props) => {
   const edit = (i, itm) => {
     setData(
       data.map((item, index) =>
-        i === index ? { ...item, isEdit: true } : { ...item }
+        i === item.id ? { ...item, isEdit: true } : { ...item }
       )
     );
     setEditItem({ ...itm, isEdit: true, index: i });
     setInput(itm.details);
     document.getElementById("inp").focus();
   };
-
+  const [active, setActive] = useState([]);
+  const [completed, setCompleted] = useState([]);
   const completeTodo = (i) => {
     setData(
       data.map((item, index) =>
-        i === index ? { ...item, isCompleted: true } : { ...item }
+        i === item.id ? { ...item, isCompleted: true } : { ...item }
       )
     );
   };
+
   return (
-    <Context.Provider
-      value={{
-        data,
-        setData,
-        removeTodo,
-        handleAddTodo,
-        edit,
-        editItem,
-        input,
-        handleInput,
-        completeTodo,
-        error,
-      }}
-    >
+    <Context.Provider value={{data,setData,removeTodo,handleAddTodo,edit,editItem,input,handleInput,completeTodo,error,}}>
       {props.children}
     </Context.Provider>
   );

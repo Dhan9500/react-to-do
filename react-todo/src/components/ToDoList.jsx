@@ -7,9 +7,9 @@ const ToDoList = () => {
   const { data } = useContextData();
   return (
     <div className="h-[70%] flex flex-col items-center overflow-auto gap-3 drop-shadow-xl">
-      {data.map((item, index) => {
-        return <Todo key={index} index={index} item={item} />;
-      })}
+      {
+            data.filter((item) =>item.isCompleted===false).map((i,index) =><Todo key={index} index={i.id} count={index} item={i} />)
+        }
     </div>
   );
 };

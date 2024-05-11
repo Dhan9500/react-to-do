@@ -4,9 +4,12 @@ import App from "./App.jsx";
 import "./index.css";
 import "remixicon/fonts/remixicon.css";
 import { ContextProv } from "./context/Context.jsx";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ContextProv>
-    <App />
-  </ContextProv>
+  <BrowserRouter>
+    <ContextProv>
+      <App />
+    </ContextProv>
+  </BrowserRouter>
 );

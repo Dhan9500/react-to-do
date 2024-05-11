@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { Context, useContextData } from "../context/Context";
 
-const Todo = ({ item, index }) => {
+const Todo = ({ item, index ,count}) => {
   const { removeTodo, edit, completeTodo } = useContextData();
 
   return (
@@ -17,7 +17,7 @@ const Todo = ({ item, index }) => {
         {/* <h1 className="text-lg font-semibold">Details</h1> */}
         <div className="w-full overflow-auto text-wrap ">
           <p className=" text-xl ml-3 font-semibold leading-1 tracking-tight text-black">
-            {index + 1}. {item.details}
+            {count + 1}. {item.details}
           </p>
         </div>
         <div className="flex flex-col justify-evenly rounded-lg h-20 bg-fuchsia-100 text-xl font-semibold ">
