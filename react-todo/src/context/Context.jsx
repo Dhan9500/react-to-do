@@ -18,6 +18,11 @@ export const ContextProv = (props) => {
     }
   }, [data]);
 
+  const date=new Date();
+    const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    const time=date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()+" "+date.getDate()+"-"+month[date.getMonth()]+"-"+date.getFullYear();
+
   const [input, setInput] = useState("");
   const handleInput = (event) => {
     setInput(event.target.value);
@@ -33,7 +38,7 @@ export const ContextProv = (props) => {
         setData(
           data.map((item, i) =>
             isEd.index === item.id
-              ? { ...item, details: input, isEdit: false }
+              ? { ...item, details: input, isEdit: false,date:time }
               : { ...item }
           )
         );
@@ -53,6 +58,7 @@ export const ContextProv = (props) => {
             details: input,
             isCompleted: false,
             isEdit: false,
+            date:time
           },
         ]);
         setInput("");
@@ -87,12 +93,16 @@ export const ContextProv = (props) => {
   };
   const [active, setActive] = useState([]);
   const [completed, setCompleted] = useState([]);
+
+
   const completeTodo = (i) => {
+    console.log(i);
     setData(
       data.map((item, index) =>
-        i === item.id ? { ...item, isCompleted: true } : { ...item }
+        i === item.id ? { ...item, isCompleted: true ,date:time} : { ...item }
       )
     );
+    // console.log(data);
   };
 
   return (

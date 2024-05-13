@@ -13,12 +13,14 @@ const Todo = ({ item, index ,count}) => {
             ? "bg-green-300"
             : "bg-gradient-to-r from-violet-300 to-fuchsia-300"
         } items-center text-white from-neutral-400 font-light`}
+        id="completed"
       >
         {/* <h1 className="text-lg font-semibold">Details</h1> */}
         <div className="w-full overflow-auto text-wrap ">
           <p className=" text-xl ml-3 font-semibold leading-1 tracking-tight text-black">
             {count + 1}. {item.details}
           </p>
+          <h2 className="italic leading-1 tracking-tight text-black ml-3">Created At: {item.date}</h2>
         </div>
         <div className="flex flex-col justify-evenly rounded-lg h-20 bg-fuchsia-100 text-xl font-semibold ">
           <i
